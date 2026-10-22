@@ -5,7 +5,7 @@ A starter repository for AI-assisted development with Codex, Claude Code, or ano
 ## What's included
 
 <details>
-<summary>Shared instructions, session handoff, optional Claude Code settings</summary>
+<summary>Shared instructions, session handoff, optional assistant settings</summary>
 <br>
 
 | File | Purpose |
@@ -14,6 +14,9 @@ A starter repository for AI-assisted development with Codex, Claude Code, or ano
 | `CLAUDE.md` | Imports `AGENTS.md` for Claude Code compatibility. Keep shared guidance in `AGENTS.md`. |
 | `docs/markdown.md` | Shared formatting rules for README.md and docs/, referenced by `AGENTS.md`. |
 | `PROGRESS.md` | Session handoff that any assistant can read and update. |
+| `.codex/config.toml` | Optional Codex settings: workspace writes, `/tmp` access, `xhigh` reasoning effort, and approvals on request. |
+| `.codex/rules/default.rules` | Codex command allowlist matching Claude Code's shell permissions. |
+| `.agents/skills/wrapup/SKILL.md` | Codex's `$wrapup` shortcut — writes a session handoff to `PROGRESS.md`, then commits. |
 | `.claude/settings.json` | Optional Claude Code settings (`model: opus`, `effortLevel: xhigh`), a permission allowlist, and a `SessionStart` hook that prints `PROGRESS.md` into context. |
 | `.claude/commands/wrapup.md` | Claude Code's `/wrapup` shortcut — writes a session handoff to `PROGRESS.md`, then commits. |
 | `.gitignore` | OS cruft, Python/Node build artifacts, editor files. |
@@ -32,13 +35,15 @@ A starter repository for AI-assisted development with Codex, Claude Code, or ano
 2. Edit `AGENTS.md` for your project, including its environment and build, test, and run commands.
 3. Delete what you don't need and start building with your preferred assistant.
 
-**Codex.** Open the repository in Codex. It reads `AGENTS.md` automatically; no Codex-specific project configuration is needed for these instructions ([official guidance](https://learn.chatgpt.com/docs/agent-configuration/agents-md)).
+**Codex.** Open and trust the repository in Codex. It reads `AGENTS.md` automatically ([official guidance](https://learn.chatgpt.com/docs/agent-configuration/agents-md)). The optional `.codex/config.toml` sets workspace writes, `/tmp` access, `xhigh` reasoning effort, and approvals on request ([configuration docs](https://learn.chatgpt.com/docs/config-file/config-reference)). Choose the model in your personal Codex settings.
+
+`.codex/rules/default.rules` mirrors Claude Code's shell allowlist. Matching commands may run outside the sandbox without another prompt. Project config and rules load only for trusted projects and remain subject to managed policy. Restart Codex after changing rules ([rules docs](https://learn.chatgpt.com/docs/agent-configuration/rules), [configuration basics](https://learn.chatgpt.com/docs/config-file/config-basic)).
 
 **Claude Code.** `CLAUDE.md` imports the same `AGENTS.md`, including for versions that do not read `AGENTS.md` directly ([shared instructions docs](https://code.claude.com/docs/en/memory#share-one-file-with-other-coding-tools)). Adjust the optional `.claude/settings.json` to taste ([settings docs](https://code.claude.com/docs/en/settings)). Personal overrides go in `.claude/settings.local.json`, which is gitignored. These settings and `/wrapup` apply to Claude Code.
 
 **Other assistants.** Point them at `AGENTS.md` if they do not discover it automatically.
 
-**Session handoff.** `AGENTS.md` tells assistants to read `PROGRESS.md` at session start. To save a handoff, ask your assistant to update `PROGRESS.md`; explicitly request a commit if you want one. Claude Code's `/wrapup` updates the handoff and commits. It never pushes.
+**Session handoff.** `AGENTS.md` tells assistants to read `PROGRESS.md` at session start. To save a handoff, ask your assistant to update `PROGRESS.md`; explicitly request a commit if you want one. Use `/wrapup` in Claude Code or `$wrapup` in Codex to update the handoff and commit. These shortcuts never push.
 
 </details>
 

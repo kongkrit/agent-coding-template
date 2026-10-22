@@ -47,6 +47,9 @@ Goal: as simple as possible, without saying anything false.
 - `CLAUDE.md` — imports `AGENTS.md` for Claude Code compatibility.
 - `docs/markdown.md` — how to write README.md and docs/: which `##` sections fold, and how. Before editing any README.md or Markdown file under docs/, read and follow it.
 - `PROGRESS.md` — shared session handoff; see the session workflow below.
+- `.codex/config.toml` — optional Codex workspace permissions, `/tmp` access, and reasoning effort.
+- `.codex/rules/default.rules` — Codex command allowlist matching the shell permissions in `.claude/settings.json`. Project config and rules load only for trusted projects; restart Codex after changing rules. Managed policy still applies.
+- `.agents/skills/wrapup/SKILL.md` — Codex's `$wrapup` shortcut for a session handoff and commit.
 - `.claude/settings.json` — optional Claude Code settings, permissions, and a `SessionStart` hook that prints `PROGRESS.md` into context. Personal overrides go in the gitignored `.claude/settings.local.json`, never here.
 - `.claude/commands/wrapup.md` — Claude Code's `/wrapup` shortcut for a session handoff and commit.
 - `.gitignore`, `.gitattributes` — ignore rules; LF line endings and binary file types.
@@ -54,7 +57,7 @@ Goal: as simple as possible, without saying anything false.
 
 ## Conventions
 
-- **NEVER `git commit` or `git push` on your own.** Do either only when the user's current message asks for it. Exception: `/wrapup` always commits, never pushes.
+- **NEVER `git commit` or `git push` on your own.** Do either only when the user's current message asks for it. Exception: an explicitly invoked `/wrapup` (Claude Code) or `$wrapup` (Codex) requests a handoff and a commit, never a push.
 - Line endings follow `.gitattributes`: LF by default, CRLF only for the Windows script types it lists.
 - New languages or toolchains extend `.gitignore` and `.gitattributes` — no parallel ignore files. Keep new entries consistent with existing ones.
 - Respect the [LICENSE](LICENSE) when adding dependencies.
@@ -64,7 +67,7 @@ Goal: as simple as possible, without saying anything false.
 
 - At session start, read `PROGRESS.md` if it has not already been loaded. Check the current repository state before relying on the handoff.
 - When asked for a session handoff, update `PROGRESS.md` with what we did, current state, next steps, and open questions.
-- Claude Code's `/wrapup` command requests a handoff and a commit. With Codex or another assistant, ask to update `PROGRESS.md` and commit for the same workflow. A handoff alone does not authorize a commit.
+- Claude Code's `/wrapup` command and Codex's `$wrapup` skill request a handoff and a commit. With another assistant, ask to update `PROGRESS.md` and commit for the same workflow. A handoff alone does not authorize a commit.
 
 ## Development environment
 
