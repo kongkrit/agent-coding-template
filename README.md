@@ -1,26 +1,52 @@
-# Claude Code Template
+# AI-Assisted Coding Template
 
-A starter repository preconfigured for [Claude Code](https://claude.com/claude-code): settings, a session-handoff workflow, ignore rules, and LF line endings from the first commit.
+A starter repository for AI-assisted development with Codex, Claude Code, or another coding assistant: shared project instructions, a session-handoff workflow, ignore rules, and LF line endings from the first commit.
 
 ## What's included
 
+<details>
+<summary>Shared instructions, session handoff, optional Claude Code settings</summary>
+<br>
+
 | File | Purpose |
 |------|---------|
-| `.claude/settings.json` | Claude Code settings (`model: opus`, `effortLevel: xhigh`), a permission allowlist, and a `SessionStart` hook that prints `PROGRESS.md` into context. |
-| `.claude/commands/wrapup.md` | `/wrapup` — writes a session handoff to `PROGRESS.md`, then commits. |
-| `CLAUDE.md` | Project instructions Claude Code loads every session: code principles, explanation style, conventions, environment. Edit to fit your project. |
-| `PROGRESS.md` | Session handoff maintained by `/wrapup`. |
+| `AGENTS.md` | Shared project instructions: code principles, explanation style, conventions, environment, and session workflow. Edit to fit your project. |
+| `CLAUDE.md` | Imports `AGENTS.md` for Claude Code compatibility. Keep shared guidance in `AGENTS.md`. |
+| `docs/markdown.md` | Shared formatting rules for README.md and docs/, referenced by `AGENTS.md`. |
+| `PROGRESS.md` | Session handoff that any assistant can read and update. |
+| `.claude/settings.json` | Optional Claude Code settings (`model: opus`, `effortLevel: xhigh`), a permission allowlist, and a `SessionStart` hook that prints `PROGRESS.md` into context. |
+| `.claude/commands/wrapup.md` | Claude Code's `/wrapup` shortcut — writes a session handoff to `PROGRESS.md`, then commits. |
 | `.gitignore` | OS cruft, Python/Node build artifacts, editor files. |
 | `.gitattributes` | LF line endings; binary file types. |
 | `LICENSE` | Project license. |
 
+</details>
+
 ## Usage
 
+<details>
+<summary>Create a project, choose an assistant, hand off a session</summary>
+<br>
+
 1. Click **Use this template** on GitHub, or clone the repo.
-2. Delete what you don't need and start building.
-3. Adjust `.claude/settings.json` to taste ([settings docs](https://code.claude.com/docs/en/settings)). Personal overrides go in `.claude/settings.local.json`, which is gitignored.
+2. Edit `AGENTS.md` for your project, including its environment and build, test, and run commands.
+3. Delete what you don't need and start building with your preferred assistant.
+
+**Codex.** Open the repository in Codex. It reads `AGENTS.md` automatically; no Codex-specific project configuration is needed for these instructions ([official guidance](https://learn.chatgpt.com/docs/agent-configuration/agents-md)).
+
+**Claude Code.** `CLAUDE.md` imports the same `AGENTS.md`, including for versions that do not read `AGENTS.md` directly ([shared instructions docs](https://code.claude.com/docs/en/memory#share-one-file-with-other-coding-tools)). Adjust the optional `.claude/settings.json` to taste ([settings docs](https://code.claude.com/docs/en/settings)). Personal overrides go in `.claude/settings.local.json`, which is gitignored. These settings and `/wrapup` apply to Claude Code.
+
+**Other assistants.** Point them at `AGENTS.md` if they do not discover it automatically.
+
+**Session handoff.** `AGENTS.md` tells assistants to read `PROGRESS.md` at session start. To save a handoff, ask your assistant to update `PROGRESS.md`; explicitly request a commit if you want one. Claude Code's `/wrapup` updates the handoff and commits. It never pushes.
+
+</details>
 
 ## Development setup (Debian 13)
+
+<details>
+<summary>Base tools, Python with uv, optional Docker multi-arch setup</summary>
+<br>
 
 `docker` is assumed installed. Base toolchain:
 
@@ -38,7 +64,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 Verify: `git --version && gh --version && curl --version && uv --version`.
 
-**More tools.** `sudo` is passwordless, and Claude Code may install whatever a task needs:
+**More tools.** In the intended development environment, `sudo` is passwordless, and coding assistants may install tools a task needs, subject to their permissions:
 
 ```bash
 sudo apt update && sudo apt install -y <package>
@@ -65,6 +91,8 @@ docker buildx create --name multiarch --driver docker-container --bootstrap --us
 On Apple Silicon with OrbStack, emulation is built in, so only the second line is needed.
 
 **Not used.** `node`/`npm` (serve static content with `python3 -m http.server`) and the .NET SDK.
+
+</details>
 
 ## License
 
