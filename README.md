@@ -21,7 +21,6 @@ A starter repository for AI-assisted development with Codex, Claude Code, or ano
 | `.claude/commands/wrapup.md` | Claude Code's `/wrapup` shortcut — writes a session handoff to `PROGRESS.md`, then commits. |
 | `.gitignore` | OS cruft, Python/Node build artifacts, editor files. |
 | `.gitattributes` | LF line endings; binary file types. |
-| `LICENSE` | Project license. |
 
 </details>
 
@@ -98,7 +97,3 @@ On Apple Silicon with OrbStack, emulation is built in, so only the second line i
 **Not used.** `node`/`npm` (serve static content with `python3 -m http.server`) and the .NET SDK.
 
 </details>
-
-## License
-
-See [LICENSE](LICENSE).
