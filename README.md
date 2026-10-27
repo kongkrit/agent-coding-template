@@ -19,6 +19,7 @@ A starter repository for AI-assisted development with Codex, Claude Code, or ano
 | `.agents/skills/wrapup/SKILL.md` | Codex's `$wrapup` shortcut — writes a session handoff to `PROGRESS.md`, then commits. |
 | `.claude/settings.json` | Optional Claude Code settings (`model: opus`, `effortLevel: xhigh`), a permission allowlist, and a `SessionStart` hook that prints `PROGRESS.md` into context. |
 | `.claude/commands/wrapup.md` | Claude Code's `/wrapup` shortcut — writes a session handoff to `PROGRESS.md`, then commits. |
+| `.claude/rules/markdown.md` | Symlink to `docs/markdown.md`; Claude Code loads it automatically when it reads a README.md or a Markdown file under docs/. |
 | `.gitignore` | OS cruft, Python/Node build artifacts, editor files. |
 | `.gitattributes` | LF line endings; binary file types. |
 

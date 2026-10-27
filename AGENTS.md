@@ -52,6 +52,7 @@ Goal: as simple as possible, without saying anything false.
 - `.agents/skills/wrapup/SKILL.md` — Codex's `$wrapup` shortcut for a session handoff and commit.
 - `.claude/settings.json` — optional Claude Code settings, permissions, and a `SessionStart` hook that prints `PROGRESS.md` into context. Personal overrides go in the gitignored `.claude/settings.local.json`, never here.
 - `.claude/commands/wrapup.md` — Claude Code's `/wrapup` shortcut for a session handoff and commit.
+- `.claude/rules/markdown.md` — symlink to `docs/markdown.md`, so Claude Code loads it automatically when it reads a file matching the rule's `paths`.
 - `.gitignore`, `.gitattributes` — ignore rules; LF line endings and binary file types.
 - `README.md` — human-facing overview.
 
