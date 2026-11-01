@@ -46,7 +46,7 @@ Goal: as simple as possible, without saying anything false.
 - `AGENTS.md` — shared project instructions. Keep assistant-independent guidance here.
 - `CLAUDE.md` — imports `AGENTS.md` for Claude Code compatibility.
 - `docs/markdown.md` — how to write README.md and docs/: which `##` sections fold, and how. Before editing any README.md or Markdown file under docs/, read and follow it.
-- `PROGRESS.md` — shared session handoff; see the session workflow below.
+- `PROGRESS.md` — latest session handoff only; earlier ones: `git log -p -- PROGRESS.md`. See the session workflow below.
 - `.codex/config.toml` — optional Codex workspace permissions, `/tmp` access, and reasoning effort.
 - `.codex/rules/default.rules` — Codex command allowlist matching the shell permissions in `.claude/settings.json`. Project config and rules load only for trusted projects; restart Codex after changing rules. Managed policy still applies.
 - `.agents/skills/wrapup/SKILL.md` — Codex's `$wrapup` shortcut for a session handoff and commit.
@@ -67,7 +67,13 @@ Goal: as simple as possible, without saying anything false.
 ## Session workflow
 
 - At session start, read `PROGRESS.md` if it has not already been loaded. Check the current repository state before relying on the handoff.
-- When asked for a session handoff, update `PROGRESS.md` with what we did, current state, next steps, and open questions.
+- When asked for a session handoff, rewrite `PROGRESS.md` as a handoff for the work since the previous handoff, not a running history:
+  1. Base: `git log -1 --format=%h -- PROGRESS.md`, the commit that wrote the previous handoff. Cover `git log <base>..HEAD`, uncommitted changes (`git status`, `git diff HEAD`), and decisions or findings from this session that left no commit.
+  2. Keep the title; the intro line names the base ("Covers the work after `<base>`; earlier handoffs: `git log -p -- PROGRESS.md`.").
+     - What we did: only the work from step 1. Replace the previous list, never append to it.
+     - Current state: a snapshot as of now (tests, branch and push state, what is verified and what is not).
+     - Next steps, Open questions: carry over what is still open, drop what is done or answered, add new items.
+  3. Once the handoff is committed, that commit becomes the next handoff's base.
 - Claude Code's `/wrapup` command and Codex's `$wrapup` skill request a handoff and a commit. With another assistant, ask to update `PROGRESS.md` and commit for the same workflow. A handoff alone does not authorize a commit.
 
 ## Development environment

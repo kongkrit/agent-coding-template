@@ -13,12 +13,12 @@ A starter repository for AI-assisted development with Codex, Claude Code, or ano
 | `AGENTS.md` | Shared project instructions: code principles, explanation style, conventions, environment, and session workflow. Edit to fit your project. |
 | `CLAUDE.md` | Imports `AGENTS.md` for Claude Code compatibility. Keep shared guidance in `AGENTS.md`. |
 | `docs/markdown.md` | Shared formatting rules for README.md and docs/, referenced by `AGENTS.md`. |
-| `PROGRESS.md` | Session handoff that any assistant can read and update. |
+| `PROGRESS.md` | Latest session handoff that any assistant can read and update; earlier ones: `git log -p -- PROGRESS.md`. |
 | `.codex/config.toml` | Optional Codex settings: workspace writes, `/tmp` access, `xhigh` reasoning effort, and approvals on request. |
 | `.codex/rules/default.rules` | Codex command allowlist matching Claude Code's shell permissions. |
-| `.agents/skills/wrapup/SKILL.md` | Codex's `$wrapup` shortcut — writes a session handoff to `PROGRESS.md`, then commits. |
+| `.agents/skills/wrapup/SKILL.md` | Codex's `$wrapup` shortcut — rewrites `PROGRESS.md` as a handoff for the work since the previous one, then commits. |
 | `.claude/settings.json` | Optional Claude Code settings (`model: opus`, `effortLevel: xhigh`), a permission allowlist, and a `SessionStart` hook that prints `PROGRESS.md` into context. |
-| `.claude/commands/wrapup.md` | Claude Code's `/wrapup` shortcut — writes a session handoff to `PROGRESS.md`, then commits. |
+| `.claude/commands/wrapup.md` | Claude Code's `/wrapup` shortcut — rewrites `PROGRESS.md` as a handoff for the work since the previous one, then commits. |
 | `.claude/rules/markdown.md` | Symlink to `docs/markdown.md`; Claude Code loads it automatically when it reads a README.md or a Markdown file under docs/. |
 | `.gitignore` | OS cruft, Python/Node build artifacts, editor files. |
 | `.gitattributes` | LF line endings; binary file types. |
